@@ -3,827 +3,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aspira - Arquitetura de IA Multi-Agente</title>
+    <title>🏗️ ASPIRA - Auditoria 360° Completa</title>
     <style>
-        /* === GLOBAL STYLES === */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            /* Light theme (default) */
-            --bg-primary: #f8fafc;
-            --bg-secondary: #ffffff;
-            --bg-accent: #e2e8f0;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --text-accent: #3b82f6;
-            --border-color: #e2e8f0;
-            --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-heavy: 0 20px 25px rgba(0, 0, 0, 0.1);
-            
-            /* Cores dos agentes */
-            --dev-color: #10b981;
-            --nerd-color: #8b5cf6;
-            --designer-color: #ec4899;
-            --copywriter-color: #f59e0b;
-            --frontend-color: #06b6d4;
-            --analytics-color: #3b82f6;
-            --trader-color: #ef4444;
-            --degen-color: #f97316;
-            --aspira-color: #6366f1;
-        }
-
-        /* Dark theme */
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-accent: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --text-accent: #60a5fa;
-            --border-color: #334155;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
             line-height: 1.6;
-            transition: all 0.3s ease;
         }
-
-        /* === HEADER === */
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(90deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            padding: 20px 0;
         }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/><circle cx="20" cy="30" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="70" r="1.5" fill="white" opacity="0.1"/></svg>') repeat;
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(100px); }
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .header .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-
-        .theme-toggle {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 0.5rem;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        /* === CONTAINER === */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* === SECTION STYLES === */
-        .section {
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            margin: 2rem 0;
-            box-shadow: var(--shadow-medium);
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .section:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-heavy);
-        }
-
-        .section-header {
-            background: linear-gradient(135deg, var(--text-accent), #8b5cf6);
-            color: white;
-            padding: 1rem 1.5rem;
-            cursor: pointer;
+        h1 { font-size: 2.5em; margin-bottom: 10px; }
+        h2 { color: #f85149; margin-top: 30px; margin-bottom: 15px; border-bottom: 2px solid #30363d; padding-bottom: 10px; }
+        h3 { color: #3fb950; margin-top: 20px; margin-bottom: 10px; }
+        
+        .tabs {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .section-header:hover {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-        }
-
-        .section-header h2 {
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .collapse-icon {
-            transition: transform 0.3s ease;
-            font-size: 1.2rem;
-        }
-
-        .section.collapsed .collapse-icon {
-            transform: rotate(-90deg);
-        }
-
-        .section-content {
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .section.collapsed .section-content {
-            display: none;
-        }
-
-        /* === DIAGRAMA CENTRAL === */
-        .central-diagram {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3rem;
-            margin: 2rem 0;
+            gap: 10px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
+            border-bottom: 2px solid #30363d;
+            padding-bottom: 10px;
         }
-
-        .user-card, .aspira-card {
-            background: var(--bg-accent);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            min-width: 250px;
-            border: 2px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .user-card:hover, .aspira-card:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .user-card {
-            border-color: #3b82f6;
-        }
-
-        .aspira-card {
-            border-color: var(--aspira-color);
-        }
-
-        .card-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .connection-arrow {
-            font-size: 2rem;
-            color: var(--text-accent);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        /* === SISTEMA DE MEMÓRIA === */
-        .memory-system {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .memory-item {
-            background: var(--bg-accent);
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--text-accent);
-            transition: all 0.3s ease;
-        }
-
-        .memory-item:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow-light);
-        }
-
-        .memory-item h4 {
-            color: var(--text-accent);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* === AGENTES ESPECIALIZADOS === */
-        .agents-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .agent-card {
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            color: white;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .agent-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .agent-card:hover::before {
-            left: 100%;
-        }
-
-        .agent-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .dev { background: linear-gradient(135deg, var(--dev-color), #059669); }
-        .nerd { background: linear-gradient(135deg, var(--nerd-color), #7c3aed); }
-        .designer { background: linear-gradient(135deg, var(--designer-color), #db2777); }
-        .copywriter { background: linear-gradient(135deg, var(--copywriter-color), #d97706); }
-        .frontend { background: linear-gradient(135deg, var(--frontend-color), #0891b2); }
-        .analytics { background: linear-gradient(135deg, var(--analytics-color), #2563eb); }
-        .trader { background: linear-gradient(135deg, var(--trader-color), #dc2626); }
-        .degen { background: linear-gradient(135deg, var(--degen-color), #ea580c); }
-        .aspira { background: linear-gradient(135deg, var(--aspira-color), #4f46e5); }
-
-        .agent-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .agent-name {
-            font-size: 1.2rem;
+        .tab-btn {
+            padding: 10px 20px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            cursor: pointer;
+            border-radius: 5px;
             font-weight: bold;
-            margin-bottom: 0.5rem;
         }
-
-        .agent-specialty {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        /* === FLUXO DE TRABALHO === */
-        .workflow {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .workflow-step {
-            background: var(--bg-accent);
-            padding: 1rem;
+        .tab-btn:hover { background: #21262d; color: #58a6ff; }
+        .tab-btn.active { background: #58a6ff; color: #0d1117; }
+        
+        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
             border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .card:hover { border-color: #58a6ff; }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin: 5px 5px 5px 0;
+        }
+        .badge-critical { background: #f85149; color: #0d1117; font-weight: bold; }
+        .badge-high { background: #d29922; color: #0d1117; }
+        .badge-medium { background: #3fb950; color: #0d1117; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: #0d1117;
+        }
+        table th { background: #21262d; padding: 12px; text-align: left; border-bottom: 2px solid #30363d; color: #58a6ff; font-weight: bold; }
+        table td { padding: 10px; border-bottom: 1px solid #30363d; }
+        
+        code {
+            background: #21262d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #79c0ff;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .status-ok { color: #3fb950; font-weight: bold; }
+        .status-warn { color: #d29922; font-weight: bold; }
+        .status-error { color: #f85149; font-weight: bold; }
+        
+        ul { margin-left: 20px; }
+        li { margin: 5px 0; }
+        
+        footer {
             text-align: center;
-            min-width: 150px;
-            border: 2px solid var(--border-color);
-            transition: all 0.3s ease;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 1px solid #30363d;
+            color: #8b949e;
         }
-
-        .workflow-step:hover {
-            border-color: var(--text-accent);
-            transform: scale(1.05);
-        }
-
-        .workflow-arrow {
-            font-size: 1.5rem;
-            color: var(--text-accent);
-        }
-
-        /* === APIS & CREDENCIAIS === */
-        .apis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .api-item {
-            background: var(--bg-accent);
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .api-item:hover {
-            border-color: var(--text-accent);
-            transform: translateY(-3px);
-        }
-
-        .api-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-accent);
-        }
-
-        /* === AUTOMATION === */
-        .automation-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-
-        .automation-item {
-            background: var(--bg-accent);
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--dev-color);
-            transition: all 0.3s ease;
-        }
-
-        .automation-item:hover {
-            transform: translateX(5px);
-        }
-
-        /* === RESPONSIVE === */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            .central-diagram {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .connection-arrow {
-                transform: rotate(90deg);
-            }
-
-            .workflow {
-                flex-direction: column;
-            }
-
-            .workflow-arrow {
-                transform: rotate(90deg);
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .agents-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-        }
-
-        /* === ANIMATIONS === */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section {
-            animation: slideIn 0.5s ease-out;
-        }
-
-        /* === UTILITIES === */
-        .text-center { text-align: center; }
-        .mb-1 { margin-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-        .mt-2 { margin-top: 1rem; }
-        .font-bold { font-weight: bold; }
-        .text-accent { color: var(--text-accent); }
     </style>
 </head>
 <body>
-    <!-- === HEADER === -->
-    <header class="header">
-        <button class="theme-toggle" onclick="toggleTheme()" title="Alternar tema">🌓</button>
-        <h1>🧠 Aspira</h1>
-        <p class="subtitle">Arquitetura de IA Multi-Agente Inteligente</p>
-    </header>
-
     <div class="container">
-        <!-- === DIAGRAMA CENTRAL === -->
-        <section class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>🤝 Diagrama Central: Você ↔ Aspira</h2>
-                <span class="collapse-icon">▼</span>
+        <header>
+            <h1>🏗️ ASPIRA Architecture</h1>
+            <p style="color: #8b949e;">Auditoria 360° Completa — 1.100+ arquivos, 9 agentes, 56 achados críticos</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('overview')">📊 Overview</button>
+            <button class="tab-btn" onclick="showTab('agents')">🤖 Agentes</button>
+            <button class="tab-btn" onclick="showTab('arquivos')">📁 Arquivos</button>
+            <button class="tab-btn" onclick="showTab('crons')">⏰ Crons</button>
+            <button class="tab-btn" onclick="showTab('fluxos')">🔄 Fluxos</button>
+            <button class="tab-btn" onclick="showTab('achados')">🔴 Achados</button>
+        </div>
+        
+        <!-- OVERVIEW -->
+        <div id="overview" class="tab-content active">
+            <h2>📊 Visão Geral Completa</h2>
+            <div class="card">
+                <h3>✅ Estatísticas Finais</h3>
+                <table>
+                    <tr>
+                        <th>Métrica</th>
+                        <th>Quantidade</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>Arquivos Documentados</td>
+                        <td><strong>1.100+</strong></td>
+                        <td><span class="status-ok">✅ 100% Mapeado</span></td>
+                    </tr>
+                    <tr>
+                        <td>Agentes Ativos</td>
+                        <td><strong>9</strong></td>
+                        <td><span class="status-ok">✅ Spawn-ready</span></td>
+                    </tr>
+                    <tr>
+                        <td>Crons Automáticos</td>
+                        <td><strong>22</strong></td>
+                        <td><span class="status-warn">⚠️ 3 em erro</span></td>
+                    </tr>
+                    <tr>
+                        <td>Fluxos Mapeados</td>
+                        <td><strong>12</strong></td>
+                        <td><span class="status-ok">✅ Completos</span></td>
+                    </tr>
+                    <tr>
+                        <td>Subsistemas</td>
+                        <td><strong>6</strong></td>
+                        <td><span class="status-ok">✅ Deep-dive</span></td>
+                    </tr>
+                    <tr>
+                        <td>Achados Críticos</td>
+                        <td><strong>56</strong> (8 🔴)</td>
+                        <td><span class="status-error">🔴 Ação necessária</span></td>
+                    </tr>
+                </table>
             </div>
-            <div class="section-content">
-                <div class="central-diagram">
-                    <!-- Usuário -->
-                    <div class="user-card">
-                        <div class="card-icon">👤</div>
-                        <h3>Você (Diego)</h3>
-                        <ul style="text-align: left; margin-top: 1rem;">
-                            <li>📍 Localização & Timezone</li>
-                            <li>⚙️ Preferências pessoais</li>
-                            <li>💼 Projetos e objetivos</li>
-                            <li>📊 Estilo de trabalho</li>
-                        </ul>
-                    </div>
-
-                    <!-- Conexão -->
-                    <div class="connection-arrow">↔️</div>
-
-                    <!-- Aspira -->
-                    <div class="aspira-card">
-                        <div class="card-icon">🧠</div>
-                        <h3>Aspira (Assistente IA)</h3>
-                        <ul style="text-align: left; margin-top: 1rem;">
-                            <li>🎭 9 Agentes especializados</li>
-                            <li>🧠 Sistema de memória persistente</li>
-                            <li>🔄 Orquestração inteligente</li>
-                            <li>⚡ Execução paralela/sequencial</li>
-                        </ul>
-                    </div>
-                </div>
+        </div>
+        
+        <!-- AGENTES -->
+        <div id="agents" class="tab-content">
+            <h2>🤖 9 Agentes Especializados</h2>
+            <div class="card">
+                <h3>ASPIRA (Main) — Orquestração</h3>
+                <p><strong>Modelo:</strong> Claude Haiku | <strong>Skill:</strong> sessions_spawn, memory, heartbeat</p>
             </div>
-        </section>
-
-        <!-- === SISTEMA DE MEMÓRIA === -->
-        <section class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>🧠 Sistema de Memória</h2>
-                <span class="collapse-icon">▼</span>
+            <div class="card">
+                <h3>DEV — Backend & Smart Contracts</h3>
+                <p><strong>Modelo:</strong> Claude Opus 4.6 | <strong>Skill:</strong> exec, coding-agent, GitHub</p>
             </div>
-            <div class="section-content">
-                <div class="memory-system">
-                    <div class="memory-item">
-                        <h4>💾 MEMORY.md</h4>
-                        <p><strong>Núcleo:</strong> Memória curada de longo prazo, insights importantes, decisões e lições aprendidas.</p>
-                    </div>
-
-                    <div class="memory-item">
-                        <h4>📅 Daily Notes</h4>
-                        <p><strong>YYYY-MM-DD.md:</strong> Logs diários de atividades, conversas e contexto recente.</p>
-                    </div>
-
-                    <div class="memory-item">
-                        <h4>📂 Topic Files</h4>
-                        <p><strong>Organizados:</strong> Projetos específicos, lessons learned, decisões importantes por categoria.</p>
-                    </div>
-
-                    <div class="memory-item">
-                        <h4>🔄 Consolidação</h4>
-                        <p><strong>Fluxo:</strong> Daily notes → revisão periódica → destilação para MEMORY.md → contexto persistente.</p>
-                    </div>
-                </div>
-
-                <div style="margin-top: 2rem; padding: 1rem; background: var(--bg-accent); border-radius: 8px;">
-                    <h4 class="text-accent mb-1">Como funciona:</h4>
-                    <p>Informações fluem dos daily notes para o núcleo de memória através de revisão e curadoria automática durante heartbeats. Isso garante contexto rico sem perder informações importantes.</p>
-                </div>
+            <div class="card">
+                <h3>NERD — Pesquisa & Análise</h3>
+                <p><strong>Modelo:</strong> Claude Haiku | <strong>Skill:</strong> tavily-search, perplexity, web_fetch</p>
             </div>
-        </section>
-
-        <!-- === 9 AGENTES ESPECIALIZADOS === -->
-        <section class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>👥 9 Agentes Especializados</h2>
-                <span class="collapse-icon">▼</span>
+            <div class="card">
+                <h3>DESIGNER — Visual & Criativo</h3>
+                <p><strong>Modelo:</strong> Claude 3.0 Flash | <strong>Skill:</strong> nano-banana-pro, figma</p>
             </div>
-            <div class="section-content">
-                <div class="agents-grid">
-                    <div class="agent-card dev">
-                        <div class="agent-icon">💻</div>
-                        <div class="agent-name">Dev</div>
-                        <div class="agent-specialty">Backend, APIs, arquitetura, bancos de dados</div>
-                    </div>
-
-                    <div class="agent-card nerd">
-                        <div class="agent-icon">🤓</div>
-                        <div class="agent-name">Nerd</div>
-                        <div class="agent-specialty">Pesquisa, análise técnica, documentação</div>
-                    </div>
-
-                    <div class="agent-card designer">
-                        <div class="agent-icon">🎨</div>
-                        <div class="agent-name">Designer</div>
-                        <div class="agent-specialty">UI/UX, visual design, protótipos</div>
-                    </div>
-
-                    <div class="agent-card copywriter">
-                        <div class="agent-icon">✍️</div>
-                        <div class="agent-name">Copywriter</div>
-                        <div class="agent-specialty">Conteúdo, copy, comunicação</div>
-                    </div>
-
-                    <div class="agent-card frontend">
-                        <div class="agent-icon">🖼️</div>
-                        <div class="agent-name">Frontend</div>
-                        <div class="agent-specialty">HTML, CSS, JavaScript, frameworks</div>
-                    </div>
-
-                    <div class="agent-card analytics">
-                        <div class="agent-icon">📊</div>
-                        <div class="agent-name">Analytics</div>
-                        <div class="agent-specialty">Dados, métricas, relatórios, insights</div>
-                    </div>
-
-                    <div class="agent-card trader">
-                        <div class="agent-icon">📈</div>
-                        <div class="agent-name">Trader</div>
-                        <div class="agent-specialty">Investimentos, mercados, análise financeira</div>
-                    </div>
-
-                    <div class="agent-card degen">
-                        <div class="agent-icon">🚀</div>
-                        <div class="agent-name">Degen</div>
-                        <div class="agent-specialty">Crypto, DeFi, oportunidades de alto risco</div>
-                    </div>
-
-                    <div class="agent-card aspira">
-                        <div class="agent-icon">🎭</div>
-                        <div class="agent-name">Aspira</div>
-                        <div class="agent-specialty">Orquestrador principal, coordenação</div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 2rem; padding: 1rem; background: var(--bg-accent); border-radius: 8px;">
-                    <h4 class="text-accent mb-1">Spawn Strategy:</h4>
-                    <p><strong>Paralelo:</strong> Para tarefas independentes (pesquisa + design + código)<br>
-                    <strong>Sequencial:</strong> Para tarefas dependentes (análise → strategy → implementação)</p>
-                </div>
+            <div class="card">
+                <h3>COPYWRITER — Conteúdo</h3>
+                <p><strong>Modelo:</strong> Claude Haiku | <strong>Skill:</strong> neynar, message, tts</p>
             </div>
-        </section>
-
-        <!-- === FLUXO DE TRABALHO === -->
-        <section class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>🔄 Fluxo de Trabalho</h2>
-                <span class="collapse-icon">▼</span>
+            <div class="card">
+                <h3>FRONTEND — UI/UX & Web</h3>
+                <p><strong>Modelo:</strong> Claude Sonnet | <strong>Skill:</strong> modern-frontend-stack, onchainkit</p>
             </div>
-            <div class="section-content">
-                <div class="workflow">
-                    <div class="workflow-step">
-                        <div style="font-size: 2rem;">📥</div>
-                        <h4>Tarefa Entra</h4>
-                        <p>Usuário faz solicitação</p>
-                    </div>
-
-                    <div class="workflow-arrow">→</div>
-
-                    <div class="workflow-step">
-                        <div style="font-size: 2rem;">🧠</div>
-                        <h4>Aspira Analisa</h4>
-                        <p>Escolhe agente(s) apropriado(s)</p>
-                    </div>
-
-                    <div class="workflow-arrow">→</div>
-
-                    <div class="workflow-step">
-                        <div style="font-size: 2rem;">⚡</div>
-                        <h4>Execução</h4>
-                        <p>Agentes executam em paralelo/sequencial</p>
-                    </div>
-
-                    <div class="workflow-arrow">→</div>
-
-                    <div class="workflow-step">
-                        <div style="font-size: 2rem;">💾</div>
-                        <h4>Consolidação</h4>
-                        <p>Resultados salvos em MEMORY</p>
-                    </div>
-
-                    <div class="workflow-arrow">→</div>
-
-                    <div class="workflow-step">
-                        <div style="font-size: 2rem;">🔄</div>
-                        <h4>Próxima Sessão</h4>
-                        <p>Contexto restaurado automaticamente</p>
-                    </div>
-                </div>
-
-                <div style="margin-top: 2rem;">
-                    <h4 class="text-accent mb-1">Exemplo Prático:</h4>
-                    <div style="background: var(--bg-accent); padding: 1rem; border-radius: 8px;">
-                        <p><strong>Request:</strong> "Crie um dashboard de crypto portfolio"</p>
-                        <p><strong>Aspira:</strong> Spawna Designer (wireframes) + Frontend (código) + Analytics (métricas) + Degen (tokens relevantes)</p>
-                        <p><strong>Resultado:</strong> Dashboard completo com design, código funcional, métricas e tokens atualizados</p>
-                    </div>
-                </div>
+            <div class="card">
+                <h3>ANALYTICS — Dados & Métricas</h3>
+                <p><strong>Modelo:</strong> Claude Sonnet | <strong>Skill:</strong> FRED API, dashboards</p>
             </div>
-        </section>
-
-        <!-- === APIS & CREDENCIAIS === -->
-        <section class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>🔐 APIs & Credenciais</h2>
-                <span class="collapse-icon">▼</span>
+            <div class="card">
+                <h3>TRADER — Trading & Técnica</h3>
+                <p><strong>Modelo:</strong> Claude Sonnet | <strong>Skill:</strong> bankr, hyperliquid, kraken</p>
             </div>
-            <div class="section-content">
-                <div class="apis-grid">
-                    <div class="api-item">
-                        <div class="api-icon">🔐</div>
-                        <h4>1Password Vault</h4>
-                        <p>Todas as credenciais seguras e centralizadas</p>
-                    </div>
-
-                    <div class="api-item">
-                        <div class="api-icon">🤖</div>
-                        <h4>OpenAI</h4>
-                        <p>Whisper (speech) + GPT-5.3 (reasoning)</p>
-                    </div>
-
-                    <div class="api-item">
-                        <div class="api-icon">📱</div>
-                        <h4>GitHub</h4>
-                        <p>Repositories, issues, PRs, CI/CD</p>
-                    </div>
-
-                    <div class="api-item">
-                        <div class="api-icon">💬</div>
-                        <h4>WhatsApp</h4>
-                        <p>Comunicação principal e notifications</p>
-                    </div>
-
-                    <div class="api-item">
-                        <div class="api-icon">🌐</div>
-                        <h4>Web APIs</h4>
-                        <p>Tavily search, weather, diversos services</p>
-                    </div>
-
-                    <div class="api-item">
-                        <div class="api-icon">📊</div>
-                        <h4>Financial APIs</h4>
-                        <p>Market data, crypto prices, portfolios</p>
-                    </div>
-                </div>
-
-                <div style="margin-top: 2rem; padding: 1rem; background: var(--bg-accent); border-radius: 8px;">
-                    <h4 class="text-accent mb-1">🛡️ Zero Hardcoding Policy:</h4>
-                    <p>Todas as credenciais ficam no 1Password vault. Nunca hardcoded no código. Agentes fazem lookup dinâmico conforme necessário.</p>
-                </div>
+            <div class="card">
+                <h3>⭐ DEGEN — DeFi & Pool Monitoring</h3>
+                <p><strong>Modelo:</strong> Claude Opus 4.6 | <strong>Skill:</strong> uniswapskill, ethers.js, clanker</p>
             </div>
-        </section>
-
-        <!-- === HEARTBEAT & AUTOMAÇÃO === -->
-        <section class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>💓 Heartbeat & Automação</h2>
-                <span class="collapse-icon">▼</span>
+        </div>
+        
+        <!-- ARQUIVOS -->
+        <div id="arquivos" class="tab-content">
+            <h2>📁 Arquivos Críticos (Core)</h2>
+            <div class="card">
+                <table>
+                    <tr>
+                        <th>Arquivo</th>
+                        <th>Propósito</th>
+                        <th>Lido por</th>
+                    </tr>
+                    <tr>
+                        <td><code>SOUL.md</code></td>
+                        <td>Essência Aspira</td>
+                        <td>Boot session</td>
+                    </tr>
+                    <tr>
+                        <td><code>USER.md</code></td>
+                        <td>Perfil Diego</td>
+                        <td>Boot session</td>
+                    </tr>
+                    <tr>
+                        <td><code>MEMORY.md</code></td>
+                        <td>Índice memória</td>
+                        <td>Heartbeat</td>
+                    </tr>
+                    <tr>
+                        <td><code>AGENTS.md</code></td>
+                        <td>9 agentes specs</td>
+                        <td>Boot session</td>
+                    </tr>
+                    <tr>
+                        <td><code>TOPICS.md</code></td>
+                        <td>18 tópicos Telegram</td>
+                        <td>Roteamento</td>
+                    </tr>
+                    <tr>
+                        <td><code>TOOLS.md</code></td>
+                        <td>40+ skills arsenal</td>
+                        <td>Todos agentes</td>
+                    </tr>
+                </table>
             </div>
-            <div class="section-content">
-                <div class="automation-list">
-                    <div class="automation-item">
-                        <h4>💓 Health Checks</h4>
-                        <p>Monitora sistemas, APIs, conexões. Alertas automáticos em caso de problemas.</p>
-                    </div>
-
-                    <div class="automation-item">
-                        <h4>🗜️ Memory Compaction</h4>
-                        <p>Consolida daily notes, remove duplicatas, mantém MEMORY.md otimizada.</p>
-                    </div>
-
-                    <div class="automation-item">
-                        <h4>📊 Pool Monitoring</h4>
-                        <p>Acompanha posições DeFi, yields, oportunidades de rebalancing.</p>
-                    </div>
-
-                    <div class="automation-item">
-                        <h4>📧 Smart Briefing</h4>
-                        <p>Resume emails importantes, agenda do dia, market updates relevantes.</p>
-                    </div>
-
-                    <div class="automation-item">
-                        <h4>🚨 Alert System</h4>
-                        <p>Notificações inteligentes: price alerts, calendar events, mentions importantes.</p>
-                    </div>
-
-                    <div class="automation-item">
-                        <h4>🔄 Sync & Backup</h4>
-                        <p>Sincroniza arquivos importantes, backup de configurações, git commits automáticos.</p>
-                    </div>
-                </div>
-
-                <div style="margin-top: 2rem; padding: 1rem; background: var(--bg-accent); border-radius: 8px;">
-                    <h4 class="text-accent mb-1">⏰ Scheduling:</h4>
-                    <p><strong>Heartbeats:</strong> Checks periódicos (~30min) para tarefas batch<br>
-                    <strong>Cron Jobs:</strong> Timing exato para tarefas específicas<br>
-                    <strong>Event-driven:</strong> Reação a triggers externos (emails, mentions, price changes)</p>
-                </div>
+        </div>
+        
+        <!-- CRONS -->
+        <div id="crons" class="tab-content">
+            <h2>⏰ 22 Crons Automáticos</h2>
+            <div class="card">
+                <table>
+                    <tr>
+                        <th>Horário (BRT)</th>
+                        <th>Job</th>
+                        <th>Agente</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>06:30</td>
+                        <td>Briefing Diário</td>
+                        <td>NERD + COPYWRITER</td>
+                        <td><span class="status-ok">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>07:00</td>
+                        <td>Carrossel Hooks</td>
+                        <td>COPYWRITER</td>
+                        <td><span class="status-ok">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>07:15</td>
+                        <td>Pool Monitor Manhã</td>
+                        <td>DEGEN</td>
+                        <td><span class="status-warn">⚠️ Erro</span></td>
+                    </tr>
+                    <tr>
+                        <td>16:15</td>
+                        <td>Pool Monitor Tarde</td>
+                        <td>DEGEN</td>
+                        <td><span class="status-warn">⚠️ Erro</span></td>
+                    </tr>
+                </table>
             </div>
-        </section>
-
-        <!-- === FOOTER === -->
-        <footer style="text-align: center; padding: 2rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); margin-top: 3rem;">
-            <p>🧠 <strong>Aspira</strong> - IA Multi-Agente Inteligente</p>
-            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Arquitetura projetada para escalabilidade, segurança e eficiência</p>
+        </div>
+        
+        <!-- FLUXOS -->
+        <div id="fluxos" class="tab-content">
+            <h2>🔄 12 Fluxos Principais</h2>
+            <div class="card">
+                <h3>Fluxo #1: Usuário envia mensagem → Resposta</h3>
+                <p>Diego → Telegram → Aspira → Análise contexto → Spawn agente opcional → Execução → Resultado → Memory atualizada</p>
+            </div>
+            <div class="card">
+                <h3>Fluxo #2: Cron dispara Pool Monitor</h3>
+                <p>07:15 BRT → pool-monitor-degen.sh → sessions_spawn(DEGEN) → ethers.js RPC → Posição Uniswap → MICAM → Telegram tópico 1046</p>
+            </div>
+            <div class="card">
+                <h3>Fluxo #3: Heartbeat 160K compactação</h3>
+                <p>3-10min → session_status check → extraction.sh (4 etapas) → Topics consolidados → MEMORY.md atualizado → Context reduzido</p>
+            </div>
+        </div>
+        
+        <!-- ACHADOS -->
+        <div id="achados" class="tab-content">
+            <h2>🔴 Top 5 Achados Críticos</h2>
+            <div class="card">
+                <h3><span class="badge badge-critical">CRÍTICO #1</span> Pool Monitor 58x/dia</h3>
+                <p><strong>Problema:</strong> Cron roda demais (redundância Linux + OpenClaw)</p>
+                <p><strong>Impacto:</strong> ~$130/mês desperdiçado</p>
+                <p><strong>Solução:</strong> Consolidar para 2x/dia (07:15 + 16:15 BRT)</p>
+            </div>
+            <div class="card">
+                <h3><span class="badge badge-critical">CRÍTICO #2</span> Credencial Hardcoded</h3>
+                <p><strong>Arquivo:</strong> <code>aggregate.js</code> | <strong>Problema:</strong> Groq API key em plaintext</p>
+                <p><strong>Solução:</strong> Mover para 1Password vault "Aspira"</p>
+            </div>
+            <div class="card">
+                <h3><span class="badge badge-critical">CRÍTICO #3</span> MEMORY.md Defasado</h3>
+                <p><strong>Problema:</strong> Última extração real: 2026-02-23 (bug em sed)</p>
+                <p><strong>Impacto:</strong> Memory não persiste entre sessões</p>
+                <p><strong>Solução:</strong> Debugar + testar extraction.sh</p>
+            </div>
+            <div class="card">
+                <h3><span class="badge badge-critical">CRÍTICO #4</span> 52 Arquivos Mortos</h3>
+                <p><strong>Problema:</strong> Docs com zero referências (deprecated)</p>
+                <p><strong>Solução:</strong> Mover para /archive/</p>
+            </div>
+            <div class="card">
+                <h3><span class="badge badge-critical">CRÍTICO #5</span> Funding Scripts = Placeholders</h3>
+                <p><strong>Problema:</strong> Scripts existem mas rodam stubs vazios</p>
+                <p><strong>Impacto:</strong> Cron executa todo dia sem resultado</p>
+                <p><strong>Solução:</strong> Implementar ou remover cron</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🫡 ASPIRA Architecture Documentation</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Auditoria completa gerada 2026-03-02 | 1.100+ arquivos | 9 agentes | 56 achados</p>
         </footer>
     </div>
-
+    
     <script>
-        /* === THEME TOGGLE === */
-        function toggleTheme() {
-            const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        function showTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(c => c.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
             
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
         }
-
-        /* === SECTION COLLAPSE === */
-        function toggleSection(header) {
-            const section = header.parentElement;
-            section.classList.toggle('collapsed');
-        }
-
-        /* === INITIALIZE === */
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load saved theme
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.body.setAttribute('data-theme', savedTheme);
-
-            // Add keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 't' && e.ctrlKey) {
-                    e.preventDefault();
-                    toggleTheme();
-                }
-            });
-
-            // Auto-collapse sections on mobile
-            if (window.innerWidth < 768) {
-                const sections = document.querySelectorAll('.section');
-                sections.forEach((section, index) => {
-                    if (index > 1) { // Keep first 2 sections open on mobile
-                        section.classList.add('collapsed');
-                    }
-                });
-            }
-        });
-
-        /* === SMOOTH SCROLLING === */
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
     </script>
 </body>
 </html>
